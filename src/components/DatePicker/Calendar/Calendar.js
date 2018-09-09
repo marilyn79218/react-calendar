@@ -18,6 +18,7 @@ type Props = {
   year: number,
   dates: Array<Moment>,
   selectedDate: Moment,
+  setSelectedDate: Moment => any,
 };
 
 const Calendar = ({
@@ -26,6 +27,7 @@ const Calendar = ({
   year,
   dates,
   selectedDate,
+  setSelectedDate,
 }: Props) => {
   console.log(' Calendar - month', month);
   console.log(' Calendar - year', year);
@@ -41,6 +43,7 @@ const Calendar = ({
       <Month
         today={today}
         selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
         month={month}
         dates={dates}
       />

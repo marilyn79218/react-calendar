@@ -18,11 +18,12 @@ type Props = {
   // onClick?: (e: SyntheticEvent<>) => mixed,
   // disabled?: boolean,
   // id?: string,
-  date: Moment,
+  baseDate: Moment,
   month: number,
   year: number,
   dates: Array<Moment>,
   selectedDate: Moment,
+  setSelectedDate: Moment => any,
   isCalendarOpen: boolean,
   setIsCalendarOpen: boolean => any,
 };
@@ -30,10 +31,11 @@ type Props = {
 const today = moment();
 
 const DatePicker = ({
-  date,
+  baseDate,
   month,
   year,
   selectedDate,
+  setSelectedDate,
   isCalendarOpen,
   setIsCalendarOpen,
 }: Props) => {
@@ -48,7 +50,7 @@ const DatePicker = ({
     <React.Fragment>
       <input
         type="text"
-        value={date.format('MM/DD/YYYY')}
+        value={baseDate.format('MM/DD/YYYY')}
         onClick={() => setIsCalendarOpen(!isCalendarOpen)}
       />
       {
@@ -56,6 +58,7 @@ const DatePicker = ({
           <Calendar
             today={today}
             selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
             month={month}
             year={year}
             dates={getAllDates()}
@@ -67,13 +70,13 @@ const DatePicker = ({
 };
 
 const hoc = compose(
-  withState('date', 'setDate', today),
+  withState('baseDate', 'setBaseDate', today),
   withState('selectedDate', 'setSelectedDate', today),
   withState('isCalendarOpen', 'setIsCalendarOpen', false),
   withProps(
-    ({ date }) => ({
-      month: date.month(),
-      year: date.year(),
+    ({ baseDate }) => ({
+      month: baseDate.month(),
+      year: baseDate.year(),
     }),
   ),
 );

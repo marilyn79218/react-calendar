@@ -17,6 +17,7 @@ type Props = {
   date: Moment,
   isSameDay: (Moment, Moment) => boolean,
   isSelectedDate: Moment => boolean,
+  setSelectedDate: Moment => any,
 };
 
 const CalendarDate = ({
@@ -25,12 +26,13 @@ const CalendarDate = ({
   date,
   isSameDay,
   isSelectedDate,
+  setSelectedDate,
 }: Props) => {
   console.log('month', month);
   console.log('date month', date.month());
 
   return (
-    <p
+    <div
       className={
         classnames({
           [styles['current-day']]: isSameDay(date, today),
@@ -39,9 +41,10 @@ const CalendarDate = ({
           [styles.past]: date.month() < month,
         })
       }
+      onClick={() => setSelectedDate(date)}
     >
       { date.date() }
-    </p>
+    </div>
   );
 };
 

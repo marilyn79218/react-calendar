@@ -9,6 +9,7 @@ type Props = {
   month: number,
   dates: Array<Moment>,
   selectedDate: Moment,
+  setSelectedDate: Moment => any,
 };
 
 const WEEK_LABELS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
@@ -18,6 +19,7 @@ const Month = ({
   month,
   dates,
   selectedDate,
+  setSelectedDate,
 }: Props) => {
   console.log('   Month', dates);
 
@@ -35,6 +37,7 @@ const Month = ({
           <CalendarDate
             today={today}
             selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
             date={date}
             month={month}
           />
