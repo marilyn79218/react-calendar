@@ -7,7 +7,7 @@ import {
   compose,
   withState,
   withProps,
-  // withHandlers,
+  withHandlers,
 } from 'recompose';
 
 import Calendar from './Calendar';
@@ -26,6 +26,7 @@ type Props = {
   setSelectedDate: Moment => any,
   isCalendarOpen: boolean,
   setIsCalendarOpen: boolean => any,
+  updateMonth: string => any,
 };
 
 const today = moment();
@@ -38,6 +39,7 @@ const DatePicker = ({
   setSelectedDate,
   isCalendarOpen,
   setIsCalendarOpen,
+  updateMonth,
 }: Props) => {
   const getAllDates = () => {
     const firstDate = moment([year, month]).weekday(0);
@@ -62,6 +64,7 @@ const DatePicker = ({
             month={month}
             year={year}
             dates={getAllDates()}
+            updateMonth={updateMonth}
           />
         ) : null
       }
@@ -79,6 +82,20 @@ const hoc = compose(
       year: baseDate.year(),
     }),
   ),
+  withHandlers({
+    updateMonth: props => (operate = 'next') => {
+      const {
+        baseDate,
+        setBaseDate,
+        // year,
+      } = props;
+
+      const methodName = operate === 'next' ? 'add' : 'subtract';
+      const firstDate = baseDate[methodName](1, 'month').startOf('month');
+      console.log('updateMonth - firstDate', firstDate.date(), firstDate.month(), firstDate.year());
+      setBaseDate(firstDate);
+    },
+  }),
 );
 
 export default hoc(DatePicker);

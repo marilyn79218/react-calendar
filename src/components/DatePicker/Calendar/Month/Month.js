@@ -5,7 +5,6 @@ import CalendarDate from './CalendarDate';
 import styles from './Month.m.css';
 
 type Props = {
-  today: Moment,
   month: number,
   dates: Array<Moment>,
   selectedDate: Moment,
@@ -15,7 +14,6 @@ type Props = {
 const WEEK_LABELS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
 const Month = ({
-  today,
   month,
   dates,
   selectedDate,
@@ -35,7 +33,6 @@ const Month = ({
       {
         dates.map(date => (
           <CalendarDate
-            today={today}
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
             date={date}

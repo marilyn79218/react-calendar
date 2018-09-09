@@ -1,4 +1,5 @@
 import * as React from 'react';
+import moment from 'moment';
 import type Moment from 'moment';
 import classnames from 'classnames';
 import {
@@ -11,8 +12,9 @@ import {
 
 import styles from './CalendarDate.m.css';
 
+const TODAY = moment();
+
 type Props = {
-  today: Moment,
   month: number,
   date: Moment,
   isSameDay: (Moment, Moment) => boolean,
@@ -21,7 +23,6 @@ type Props = {
 };
 
 const CalendarDate = ({
-  today,
   month,
   date,
   isSameDay,
@@ -35,7 +36,7 @@ const CalendarDate = ({
     <div
       className={
         classnames({
-          [styles['current-day']]: isSameDay(date, today),
+          [styles['current-day']]: isSameDay(date, TODAY),
           [styles['selected-day']]: isSelectedDate(date),
           [styles.future]: date.month() > month,
           [styles.past]: date.month() < month,
