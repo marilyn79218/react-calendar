@@ -22,6 +22,7 @@ type Props = {
   month: number,
   year: number,
   dates: Array<Moment>,
+  selectedDate: Moment,
   isCalendarOpen: boolean,
   setIsCalendarOpen: boolean => any,
 };
@@ -32,6 +33,7 @@ const DatePicker = ({
   date,
   month,
   year,
+  selectedDate,
   isCalendarOpen,
   setIsCalendarOpen,
 }: Props) => {
@@ -52,7 +54,9 @@ const DatePicker = ({
       {
         isCalendarOpen ? (
           <Calendar
-            month={month + 1}
+            today={today}
+            selectedDate={selectedDate}
+            month={month}
             year={year}
             dates={getAllDates()}
           />
@@ -64,6 +68,7 @@ const DatePicker = ({
 
 const hoc = compose(
   withState('date', 'setDate', today),
+  withState('selectedDate', 'setSelectedDate', today),
   withState('isCalendarOpen', 'setIsCalendarOpen', false),
   withProps(
     ({ date }) => ({

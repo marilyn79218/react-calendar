@@ -1,0 +1,13 @@
+.current-day {
+  color: #db3d44;
+}
+
+.selected-day {
+  color: white;
+  background: #db3d44;
+  border-radius: 50%;
+}
+
+.past, .future {
+  color: gray;
+}

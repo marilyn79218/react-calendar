@@ -18,7 +18,7 @@ const CalendarHeader = ({
       &laquo;
     </button>
     <h3>
-      { month } & { year }
+      { month + 1 } & { year }
     </h3>
     <button>
       &raquo;
