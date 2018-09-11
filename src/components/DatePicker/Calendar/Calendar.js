@@ -63,8 +63,11 @@ const hoc = compose(
         setDisplayMode,
       } = props;
 
+      const nextMode = MODE_INTERACTIVE[currentMode].nextMode;
       return () => {
-        setDisplayMode(MODE_INTERACTIVE[currentMode].nextMode);
+        if (nextMode) {
+          setDisplayMode(nextMode);
+        }
       };
     },
     getPanelClickHandler: props => currentMode => (targetYear, targetMonth = 0) => {
@@ -92,6 +95,7 @@ const hoc = compose(
         case DISPLAY_MODES[1]: {
           return (
             <MonthPanel
+              baseDate={baseDate}
               year={year}
               panelClickHandler={getPanelClickHandler(currentMode)}
             />
@@ -100,6 +104,7 @@ const hoc = compose(
         case DISPLAY_MODES[2]: {
           return (
             <YearPanel
+              baseDate={baseDate}
               year={year}
               panelClickHandler={getPanelClickHandler(currentMode)}
             />

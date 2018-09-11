@@ -8,12 +8,14 @@ import {
 import styles from './YearPanel.m.css';
 
 type Props = {
+  baseYear: number,
   allYears: Array<number>,
   availableYears: Array<number>,
   panelClickHandler: (number, number) => any,
 };
 
 const YearPanel = ({
+  baseYear,
   allYears,
   availableYears,
   panelClickHandler,
@@ -28,6 +30,7 @@ const YearPanel = ({
           className={
             classnames({
               [styles['is-available']]: availableYears.indexOf(year) > -1,
+              [styles['is-base-year']]: year === baseYear,
             })
           }
           onClick={panelClickHandler(year)}
@@ -51,6 +54,11 @@ const hoc = compose(
         availableYears,
       });
     },
+  ),
+  withProps(
+    ({ baseDate }) => ({
+      baseYear: baseDate.year(),
+    }),
   ),
 );
 

@@ -9,7 +9,7 @@
 
   > p {
     width: 30px;
-    height: 35px;
+    height: 30px;
 
     &:before {
       content: '';
@@ -21,7 +21,7 @@
 
   > div {
     width: 30px;
-    height: 35px;
+    height: 30px;
 
     &:before {
       content: '';
