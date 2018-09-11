@@ -19,7 +19,6 @@ import YearPanel from './YearPanel';
 import styles from './Calendar.m.css';
 
 type Props = {
-  month: number,
   year: number,
   dates: Array<Moment>,
   baseDate: Moment,
@@ -33,8 +32,6 @@ type Props = {
 
 const Calendar = ({
   baseDate,
-  month,
-  year,
   displayMode,
   getTextClickHandler,
   headerArrowHandler,
@@ -45,8 +42,6 @@ const Calendar = ({
   >
     <CalendarHeader
       baseDate={baseDate}
-      month={month}
-      year={year}
       headerArrowHandler={headerArrowHandler(displayMode)}
       textClickHandler={getTextClickHandler(displayMode)}
       displayMode={displayMode}
@@ -75,12 +70,12 @@ const hoc = compose(
     getPanelClickHandler: props => currentMode => (targetYear, targetMonth = 0) => {
       const {
         setDisplayMode,
-        updateMonth,
+        updateBaseDate,
       } = props;
 
       return () => {
         setDisplayMode(MODE_INTERACTIVE[currentMode].prevMode);
-        updateMonth(targetYear, targetMonth, 1);
+        updateBaseDate(targetYear, targetMonth, 1);
       };
     },
   }),
@@ -88,7 +83,7 @@ const hoc = compose(
     headerArrowHandler: props => currentMode => (direction = 'next') => {
       const {
         baseDate,
-        updateMonth,
+        updateBaseDate,
       } = props;
       const dateValue = baseDate.date();
       const baseMonth = baseDate.month();
@@ -97,17 +92,17 @@ const hoc = compose(
       switch (currentMode) {
         case DISPLAY_MODES[1]: {
           return () => {
-            updateMonth(baseYear, direction === 'next' ? baseMonth + 1 : baseMonth - 1);
+            updateBaseDate(baseYear, direction === 'next' ? baseMonth + 1 : baseMonth - 1);
           };
         }
         case DISPLAY_MODES[2]: {
           return () => {
-            updateMonth(direction === 'next' ? baseYear + 1 : baseYear - 1);
+            updateBaseDate(direction === 'next' ? baseYear + 1 : baseYear - 1);
           };
         }
         default: {
           return () => {
-            updateMonth(baseYear, baseMonth, direction === 'next' ? dateValue + 1 : dateValue - 1);
+            updateBaseDate(baseYear, baseMonth, direction === 'next' ? dateValue + 1 : dateValue - 1);
           };
         }
       }
@@ -115,8 +110,6 @@ const hoc = compose(
     getComponent: ({
       baseDate,
       setBaseDate,
-      month,
-      year,
       dates,
       getPanelClickHandler,
     }: Props) => (currentMode) => {
@@ -125,7 +118,6 @@ const hoc = compose(
           return (
             <MonthPanel
               baseDate={baseDate}
-              year={year}
               panelClickHandler={getPanelClickHandler(currentMode)}
             />
           );
@@ -134,7 +126,6 @@ const hoc = compose(
           return (
             <YearPanel
               baseDate={baseDate}
-              year={year}
               panelClickHandler={getPanelClickHandler(currentMode)}
             />
           );
@@ -144,7 +135,6 @@ const hoc = compose(
             <Month
               baseDate={baseDate}
               setBaseDate={setBaseDate}
-              month={month}
               dates={dates}
             />
           );

@@ -6,7 +6,6 @@ import type Moment from 'moment';
 import {
   compose,
   withState,
-  withProps,
   withHandlers,
 } from 'recompose';
 
@@ -17,32 +16,25 @@ import {
 import Calendar from './Calendar';
 
 type Props = {
-  // children?: React.Node,
-  // style?: {},
-  // onClick?: (e: SyntheticEvent<>) => mixed,
-  // disabled?: boolean,
-  // id?: string,
   baseDate: Moment,
-  month: number,
-  year: number,
   dates: Array<Moment>,
   setBaseDate: Moment => any,
   isCalendarOpen: boolean,
   setIsCalendarOpen: boolean => any,
-  updateMonth: string => any,
+  updateBaseDate: string => any,
 };
 
 const today = moment();
 
 const DatePicker = ({
   baseDate,
-  month,
-  year,
   setBaseDate,
   isCalendarOpen,
   setIsCalendarOpen,
-  updateMonth,
+  updateBaseDate,
 }: Props) => {
+  const month = baseDate.month();
+  const year = baseDate.year();
   const getAllDates = () => {
     const firstDate = moment([year, month]).weekday(0);
     const allDates = [...new Array(WEEKDAYS_COUNTS * ROW_COUNTS)].map((ele, index) => firstDate.clone().add(index, 'd'));
@@ -62,10 +54,8 @@ const DatePicker = ({
           <Calendar
             baseDate={baseDate}
             setBaseDate={setBaseDate}
-            month={month}
-            year={year}
             dates={getAllDates()}
-            updateMonth={updateMonth}
+            updateBaseDate={updateBaseDate}
           />
         ) : null
       }
@@ -76,14 +66,8 @@ const DatePicker = ({
 const hoc = compose(
   withState('baseDate', 'setBaseDate', today),
   withState('isCalendarOpen', 'setIsCalendarOpen', false),
-  withProps(
-    ({ baseDate }) => ({
-      month: baseDate.month(),
-      year: baseDate.year(),
-    }),
-  ),
   withHandlers({
-    updateMonth: props => (targetYear, targetMonth = 0, targetDate = 1) => {
+    updateBaseDate: props => (targetYear, targetMonth = 0, targetDate = 1) => {
       const {
         setBaseDate,
       } = props;

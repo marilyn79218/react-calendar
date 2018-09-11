@@ -9,14 +9,14 @@ import { MONTH_LABELS } from '../../../../shared/constants';
 import styles from './MonthPanel.m.css';
 
 type Props = {
+  baseYear: number,
   baseMonth: number,
-  year: number,
   panelClickHandler: () => any,
 };
 
 const MonthPanel = ({
+  baseYear,
   baseMonth,
-  year,
   panelClickHandler,
 }: Props) => (
   <section
@@ -31,7 +31,7 @@ const MonthPanel = ({
               [styles['is-base-month']]: monthObj.value === baseMonth,
             })
           }
-          onClick={panelClickHandler(year, monthObj.value)}
+          onClick={panelClickHandler(baseYear, monthObj.value)}
         >
           { monthObj.label }
         </div>
@@ -43,6 +43,7 @@ const MonthPanel = ({
 const hoc = compose(
   withProps(
     ({ baseDate }) => ({
+      baseYear: baseDate.year(),
       baseMonth: baseDate.month(),
     }),
   ),

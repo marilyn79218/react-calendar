@@ -41,7 +41,8 @@ const CalendarHeader = ({
 
 const hoc = compose(
   withProps(
-    ({ year }) => {
+    ({ baseDate }) => {
+      const year = baseDate.year();
       const floorYear = Math.floor(year / 10) * 10;
       const availableYears = [...Array(10)].map((ele, index) => floorYear + index);
       const allYears = [(floorYear - 1), ...availableYears, (floorYear + 10)];
@@ -54,11 +55,13 @@ const hoc = compose(
   ),
   withProps(
     ({
+      baseDate,
       displayMode,
-      month,
-      year,
       availableYears,
     }) => {
+      const month = baseDate.month();
+      const year = baseDate.year();
+
       switch (displayMode) {
         case DISPLAY_MODES[1]: return ({
           headerText: `${year}`,

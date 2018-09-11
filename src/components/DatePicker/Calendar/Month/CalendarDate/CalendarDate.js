@@ -4,6 +4,7 @@ import type Moment from 'moment';
 import classnames from 'classnames';
 import {
   compose,
+  withProps,
   withHandlers,
 } from 'recompose';
 import {
@@ -45,6 +46,11 @@ const CalendarDate = ({
 );
 
 const hoc = compose(
+  withProps(
+    ({ baseDate }) => ({
+      month: baseDate.month(),
+    }),
+  ),
   withHandlers({
     isSameDay: () => (date1, date2) => (
       equals(date1.year(), date2.year()) &&

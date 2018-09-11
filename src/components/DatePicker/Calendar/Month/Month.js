@@ -6,14 +6,12 @@ import CalendarDate from './CalendarDate';
 import styles from './Month.m.css';
 
 type Props = {
-  month: number,
   dates: Array<Moment>,
   baseDate: Moment,
   setBaseDate: Moment => any,
 };
 
 const Month = ({
-  month,
   dates,
   baseDate,
   setBaseDate,
@@ -35,7 +33,6 @@ const Month = ({
           baseDate={baseDate}
           setBaseDate={setBaseDate}
           date={date}
-          month={month}
         />
       ))
     }
