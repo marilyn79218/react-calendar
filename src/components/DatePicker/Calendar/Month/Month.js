@@ -9,12 +9,14 @@ type Props = {
   dates: Array<Moment>,
   baseDate: Moment,
   setBaseDate: Moment => any,
+  setIsCalendarOpen: boolean => any,
 };
 
 const Month = ({
   dates,
   baseDate,
   setBaseDate,
+  setIsCalendarOpen,
 }: Props) => (
   <section
     className={styles['month-container']}
@@ -33,6 +35,7 @@ const Month = ({
           baseDate={baseDate}
           setBaseDate={setBaseDate}
           date={date}
+          setIsCalendarOpen={setIsCalendarOpen}
         />
       ))
     }

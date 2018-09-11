@@ -21,6 +21,7 @@ type Props = {
   isSameDay: (Moment, Moment) => boolean,
   isSelectedDate: Moment => boolean,
   setBaseDate: Moment => any,
+  setIsCalendarOpen: boolean => any,
 };
 
 const CalendarDate = ({
@@ -29,6 +30,7 @@ const CalendarDate = ({
   isSameDay,
   isSelectedDate,
   setBaseDate,
+  setIsCalendarOpen,
 }: Props) => (
   <div
     className={
@@ -39,7 +41,10 @@ const CalendarDate = ({
         [styles.past]: date.month() < month,
       })
     }
-    onClick={() => setBaseDate(date)}
+    onClick={() => {
+      setBaseDate(date);
+      setIsCalendarOpen(false);
+    }}
   >
     { date.date() }
   </div>

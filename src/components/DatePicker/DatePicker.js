@@ -10,6 +10,7 @@ import {
 } from 'recompose';
 
 import {
+  DATE_FORMAT,
   ROW_COUNTS,
   WEEKDAYS_COUNTS,
 } from '../../shared/constants';
@@ -46,7 +47,7 @@ const DatePicker = ({
     <React.Fragment>
       <input
         type="text"
-        value={baseDate.format('MM/DD/YYYY')}
+        value={baseDate.format(DATE_FORMAT)}
         onClick={() => setIsCalendarOpen(!isCalendarOpen)}
       />
       {
@@ -56,6 +57,7 @@ const DatePicker = ({
             setBaseDate={setBaseDate}
             dates={getAllDates()}
             updateBaseDate={updateBaseDate}
+            setIsCalendarOpen={setIsCalendarOpen}
           />
         ) : null
       }

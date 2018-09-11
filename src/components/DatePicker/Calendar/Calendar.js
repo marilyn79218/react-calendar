@@ -28,6 +28,7 @@ type Props = {
   getTextClickHandler: string => any,
   getPanelClickHandler: string => any,
   getComponent: () => React.Node,
+  setIsCalendarOpen: boolean => any,
 };
 
 const Calendar = ({
@@ -112,6 +113,7 @@ const hoc = compose(
       setBaseDate,
       dates,
       getPanelClickHandler,
+      setIsCalendarOpen,
     }: Props) => (currentMode) => {
       switch (currentMode) {
         case DISPLAY_MODES[1]: {
@@ -136,6 +138,7 @@ const hoc = compose(
               baseDate={baseDate}
               setBaseDate={setBaseDate}
               dates={dates}
+              setIsCalendarOpen={setIsCalendarOpen}
             />
           );
         }
