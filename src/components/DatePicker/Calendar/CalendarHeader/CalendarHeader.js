@@ -4,7 +4,10 @@ import {
   withProps,
 } from 'recompose';
 
-import { DISPLAY_MODES } from '../../../../shared/constants';
+import {
+  DISPLAY_MODES,
+  MONTH_LABELS,
+} from '../../../../shared/constants';
 import styles from './CalendarHeader.m.css';
 
 type Props = {
@@ -24,9 +27,10 @@ const CalendarHeader = ({
     <button
       onClick={headerArrowHandler('prev')}
     >
-      &laquo;
+      &lt;
     </button>
     <div
+      className={styles['text-area']}
       onClick={textClickHandler}
     >
       { headerText }
@@ -34,7 +38,7 @@ const CalendarHeader = ({
     <button
       onClick={headerArrowHandler('next')}
     >
-      &raquo;
+      &gt;
     </button>
   </header>
 );
@@ -69,9 +73,13 @@ const hoc = compose(
         case DISPLAY_MODES[2]: return ({
           headerText: `${availableYears[0]}-${availableYears[availableYears.length - 1]}`,
         });
-        default: return ({
-          headerText: `${month + 1} & ${year}`,
-        });
+        default: {
+          const monthLabel = MONTH_LABELS.find(monthObj => monthObj.value === month).label;
+
+          return ({
+            headerText: `${monthLabel} ${year}`,
+          });
+        }
       }
     },
   ),
