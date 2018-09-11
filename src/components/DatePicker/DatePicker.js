@@ -10,6 +10,10 @@ import {
   withHandlers,
 } from 'recompose';
 
+import {
+  ROW_COUNTS,
+  WEEKDAYS_COUNTS,
+} from '../../shared/constants';
 import Calendar from './Calendar';
 
 type Props = {
@@ -22,8 +26,7 @@ type Props = {
   month: number,
   year: number,
   dates: Array<Moment>,
-  selectedDate: Moment,
-  setSelectedDate: Moment => any,
+  setBaseDate: Moment => any,
   isCalendarOpen: boolean,
   setIsCalendarOpen: boolean => any,
   updateMonth: string => any,
@@ -35,15 +38,14 @@ const DatePicker = ({
   baseDate,
   month,
   year,
-  selectedDate,
-  setSelectedDate,
+  setBaseDate,
   isCalendarOpen,
   setIsCalendarOpen,
   updateMonth,
 }: Props) => {
   const getAllDates = () => {
     const firstDate = moment([year, month]).weekday(0);
-    const allDates = [...new Array(7 * 6)].map((ele, index) => firstDate.clone().add(index, 'd'));
+    const allDates = [...new Array(WEEKDAYS_COUNTS * ROW_COUNTS)].map((ele, index) => firstDate.clone().add(index, 'd'));
 
     return allDates;
   };
@@ -59,8 +61,8 @@ const DatePicker = ({
         isCalendarOpen ? (
           <Calendar
             today={today}
-            selectedDate={selectedDate}
-            setSelectedDate={setSelectedDate}
+            baseDate={baseDate}
+            setBaseDate={setBaseDate}
             month={month}
             year={year}
             dates={getAllDates()}
@@ -74,7 +76,6 @@ const DatePicker = ({
 
 const hoc = compose(
   withState('baseDate', 'setBaseDate', today),
-  withState('selectedDate', 'setSelectedDate', today),
   withState('isCalendarOpen', 'setIsCalendarOpen', false),
   withProps(
     ({ baseDate }) => ({

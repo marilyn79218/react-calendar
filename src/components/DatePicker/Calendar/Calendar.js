@@ -14,6 +14,7 @@ import {
 import CalendarHeader from './CalendarHeader';
 import Month from './Month';
 import MonthPanel from './MonthPanel';
+import YearPanel from './YearPanel';
 
 import styles from './Calendar.m.css';
 
@@ -21,8 +22,8 @@ type Props = {
   month: number,
   year: number,
   dates: Array<Moment>,
-  selectedDate: Moment,
-  setSelectedDate: Moment => any,
+  baseDate: Moment,
+  setBaseDate: Moment => any,
   updateMonth: string => any,
   displayMode: string,
   getTextClickHandler: string => any,
@@ -71,7 +72,7 @@ const hoc = compose(
         setDisplayMode(MODE_INTERACTIVE[currentMode].nextMode);
       };
     },
-    getPanelClickHandler: props => currentMode => (targetYear, targetMonth) => {
+    getPanelClickHandler: props => currentMode => (targetYear, targetMonth = 0) => {
       const {
         setDisplayMode,
         updateMonth,
@@ -85,8 +86,8 @@ const hoc = compose(
   }),
   withHandlers({
     getComponent: ({
-      selectedDate,
-      setSelectedDate,
+      baseDate,
+      setBaseDate,
       month,
       year,
       dates,
@@ -95,27 +96,24 @@ const hoc = compose(
       switch (currentMode) {
         case DISPLAY_MODES[1]: {
           return (
-            <React.Fragment>
-              Mode { DISPLAY_MODES[1] }
-              <MonthPanel
-                year={year}
-                panelClickHandler={getPanelClickHandler(currentMode)}
-              />
-            </React.Fragment>
+            <MonthPanel
+              year={year}
+              panelClickHandler={getPanelClickHandler(currentMode)}
+            />
           );
         }
         case DISPLAY_MODES[2]: {
           return (
-            <div>
-              Mode { DISPLAY_MODES[2] }
-            </div>
+            <YearPanel
+              year={year}
+            />
           );
         }
         default: {
           return (
             <Month
-              selectedDate={selectedDate}
-              setSelectedDate={setSelectedDate}
+              baseDate={baseDate}
+              setBaseDate={setBaseDate}
               month={month}
               dates={dates}
             />

@@ -19,7 +19,7 @@ type Props = {
   date: Moment,
   isSameDay: (Moment, Moment) => boolean,
   isSelectedDate: Moment => boolean,
-  setSelectedDate: Moment => any,
+  setBaseDate: Moment => any,
 };
 
 const CalendarDate = ({
@@ -27,7 +27,7 @@ const CalendarDate = ({
   date,
   isSameDay,
   isSelectedDate,
-  setSelectedDate,
+  setBaseDate,
 }: Props) => (
   <div
     className={
@@ -38,7 +38,7 @@ const CalendarDate = ({
         [styles.past]: date.month() < month,
       })
     }
-    onClick={() => setSelectedDate(date)}
+    onClick={() => setBaseDate(date)}
   >
     { date.date() }
   </div>
@@ -56,10 +56,10 @@ const hoc = compose(
     isSelectedDate: props => (date) => {
       const {
         isSameDay,
-        selectedDate,
+        baseDate,
       } = props;
 
-      return isSameDay(date, selectedDate);
+      return isSameDay(date, baseDate);
     },
   }),
 );

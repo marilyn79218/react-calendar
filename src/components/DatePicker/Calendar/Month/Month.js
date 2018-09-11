@@ -8,15 +8,15 @@ import styles from './Month.m.css';
 type Props = {
   month: number,
   dates: Array<Moment>,
-  selectedDate: Moment,
-  setSelectedDate: Moment => any,
+  baseDate: Moment,
+  setBaseDate: Moment => any,
 };
 
 const Month = ({
   month,
   dates,
-  selectedDate,
-  setSelectedDate,
+  baseDate,
+  setBaseDate,
 }: Props) => (
   <section
     className={styles['month-container']}
@@ -32,8 +32,8 @@ const Month = ({
       dates.map(date => (
         <CalendarDate
           key={JSON.stringify(date)}
-          selectedDate={selectedDate}
-          setSelectedDate={setSelectedDate}
+          baseDate={baseDate}
+          setBaseDate={setBaseDate}
           date={date}
           month={month}
         />

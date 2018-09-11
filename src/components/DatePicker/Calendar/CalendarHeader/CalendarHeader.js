@@ -45,14 +45,30 @@ const CalendarHeader = ({
 
 const hoc = compose(
   withProps(
+    ({ year }) => {
+      const floorYear = Math.floor(year / 10) * 10;
+      const availableYears = [...Array(10)].map((ele, index) => floorYear + index);
+      const allYears = [(floorYear - 1), ...availableYears, (floorYear + 10)];
+
+      return ({
+        allYears,
+        availableYears,
+      });
+    },
+  ),
+  withProps(
     ({
       displayMode,
       month,
       year,
+      availableYears,
     }) => {
       switch (displayMode) {
         case DISPLAY_MODES[1]: return ({
           headerText: `${year}`,
+        });
+        case DISPLAY_MODES[2]: return ({
+          headerText: `${availableYears[0]}-${availableYears[availableYears.length - 1]}`,
         });
         default: return ({
           headerText: `${month + 1} & ${year}`,
