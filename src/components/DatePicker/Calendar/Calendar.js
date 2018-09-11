@@ -24,7 +24,7 @@ type Props = {
   dates: Array<Moment>,
   baseDate: Moment,
   setBaseDate: Moment => any,
-  updateMonth: string => any,
+  headerArrowHandler: string => any,
   displayMode: string,
   getTextClickHandler: string => any,
   getPanelClickHandler: string => any,
@@ -32,20 +32,22 @@ type Props = {
 };
 
 const Calendar = ({
+  baseDate,
   month,
   year,
-  updateMonth,
   displayMode,
   getTextClickHandler,
+  headerArrowHandler,
   getComponent,
 }: Props) => (
   <section
     className={styles.container}
   >
     <CalendarHeader
+      baseDate={baseDate}
       month={month}
       year={year}
-      updateMonth={updateMonth}
+      headerArrowHandler={headerArrowHandler(displayMode)}
       textClickHandler={getTextClickHandler(displayMode)}
       displayMode={displayMode}
     />
@@ -78,11 +80,38 @@ const hoc = compose(
 
       return () => {
         setDisplayMode(MODE_INTERACTIVE[currentMode].prevMode);
-        updateMonth(targetYear, targetMonth);
+        updateMonth(targetYear, targetMonth, 1);
       };
     },
   }),
   withHandlers({
+    headerArrowHandler: props => currentMode => (direction = 'next') => {
+      const {
+        baseDate,
+        updateMonth,
+      } = props;
+      const dateValue = baseDate.date();
+      const baseMonth = baseDate.month();
+      const baseYear = baseDate.year();
+
+      switch (currentMode) {
+        case DISPLAY_MODES[1]: {
+          return () => {
+            updateMonth(baseYear, direction === 'next' ? baseMonth + 1 : baseMonth - 1);
+          };
+        }
+        case DISPLAY_MODES[2]: {
+          return () => {
+            updateMonth(direction === 'next' ? baseYear + 1 : baseYear - 1);
+          };
+        }
+        default: {
+          return () => {
+            updateMonth(baseYear, baseMonth, direction === 'next' ? dateValue + 1 : dateValue - 1);
+          };
+        }
+      }
+    },
     getComponent: ({
       baseDate,
       setBaseDate,

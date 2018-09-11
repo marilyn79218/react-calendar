@@ -8,25 +8,21 @@ import { DISPLAY_MODES } from '../../../../shared/constants';
 import styles from './CalendarHeader.m.css';
 
 type Props = {
-  month: number,
-  year: number,
-  updateMonth: string => any,
+  headerArrowHandler: string => any,
   textClickHandler: () => any,
   headerText: string,
 };
 
 const CalendarHeader = ({
-  month,
-  year,
-  updateMonth,
   textClickHandler,
+  headerArrowHandler,
   headerText,
 }: Props) => (
   <header
     className={styles['header-container']}
   >
     <button
-      onClick={() => updateMonth(year, month - 1)}
+      onClick={headerArrowHandler('prev')}
     >
       &laquo;
     </button>
@@ -36,7 +32,7 @@ const CalendarHeader = ({
       { headerText }
     </div>
     <button
-      onClick={() => updateMonth(year, month + 1)}
+      onClick={headerArrowHandler('next')}
     >
       &raquo;
     </button>

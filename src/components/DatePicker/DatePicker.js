@@ -60,7 +60,6 @@ const DatePicker = ({
       {
         isCalendarOpen ? (
           <Calendar
-            today={today}
             baseDate={baseDate}
             setBaseDate={setBaseDate}
             month={month}
@@ -84,12 +83,12 @@ const hoc = compose(
     }),
   ),
   withHandlers({
-    updateMonth: props => (targetYear, targetMonth) => {
+    updateMonth: props => (targetYear, targetMonth = 0, targetDate = 1) => {
       const {
         setBaseDate,
       } = props;
 
-      const firstDate = moment().year(targetYear).month(targetMonth).date(1);
+      const firstDate = moment().year(targetYear).month(targetMonth).date(targetDate);
       setBaseDate(firstDate);
     },
   }),
