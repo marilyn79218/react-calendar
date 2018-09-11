@@ -1,4 +1,6 @@
 // @flow
+import moment from 'moment';
+
 export const BASENAME: string = process.env.PUBLIC_URL || '/';
 export const DEVELOPMENT: string = 'development';
 export const NODE_ENV: string = process.env.NODE_ENV || DEVELOPMENT;
@@ -19,4 +21,25 @@ export const LOGIN_STATUS = {
   NOT_LOGIN: 'NOT_LOGIN',
   LOGIN_SUCCESS: 'LOGIN_SUCCESS',
   LOGIN_FAIL: 'LOGIN_FAIL',
+};
+
+export const WEEK_LABELS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+export const MONTH_LABELS = moment.monthsShort().map((monthName, index) => ({
+  label: monthName,
+  value: index,
+}));
+export const DISPLAY_MODES = ['MONTH_DATES', 'MONTH_PANEL', 'YEAR_PANEL'];
+export const MODE_INTERACTIVE = {
+  [DISPLAY_MODES[0]]: {
+    prevMode: null,
+    nextMode: DISPLAY_MODES[1],
+  },
+  [DISPLAY_MODES[1]]: {
+    prevMode: DISPLAY_MODES[0],
+    nextMode: DISPLAY_MODES[2],
+  },
+  [DISPLAY_MODES[2]]: {
+    prevMode: DISPLAY_MODES[1],
+    nextMode: null,
+  },
 };

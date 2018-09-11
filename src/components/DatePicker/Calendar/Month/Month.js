@@ -1,6 +1,7 @@
 import * as React from 'react';
 import type Moment from 'moment';
 
+import { WEEK_LABELS } from '../../../../shared/constants';
 import CalendarDate from './CalendarDate';
 import styles from './Month.m.css';
 
@@ -11,37 +12,34 @@ type Props = {
   setSelectedDate: Moment => any,
 };
 
-const WEEK_LABELS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-
 const Month = ({
   month,
   dates,
   selectedDate,
   setSelectedDate,
-}: Props) => {
-  console.log('   Month', dates);
-
-  return (
-    <section
-      className={styles['month-container']}
-    >
-      {
-        WEEK_LABELS.map(weekLabel => (
-          <p>{ weekLabel }</p>
-        ))
-      }
-      {
-        dates.map(date => (
-          <CalendarDate
-            selectedDate={selectedDate}
-            setSelectedDate={setSelectedDate}
-            date={date}
-            month={month}
-          />
-        ))
-      }
-    </section>
-  );
-};
+}: Props) => (
+  <section
+    className={styles['month-container']}
+  >
+    {
+      WEEK_LABELS.map(weekLabel => (
+        <p
+          key={weekLabel}
+        >{ weekLabel }</p>
+      ))
+    }
+    {
+      dates.map(date => (
+        <CalendarDate
+          key={JSON.stringify(date)}
+          selectedDate={selectedDate}
+          setSelectedDate={setSelectedDate}
+          date={date}
+          month={month}
+        />
+      ))
+    }
+  </section>
+);
 
 export default Month;

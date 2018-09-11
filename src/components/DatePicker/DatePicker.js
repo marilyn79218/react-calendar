@@ -83,15 +83,12 @@ const hoc = compose(
     }),
   ),
   withHandlers({
-    updateMonth: props => (operate = 'next') => {
+    updateMonth: props => (targetYear, targetMonth) => {
       const {
-        baseDate,
         setBaseDate,
-        // year,
       } = props;
 
-      const methodName = operate === 'next' ? 'add' : 'subtract';
-      const firstDate = baseDate[methodName](1, 'month').startOf('month');
+      const firstDate = moment().year(targetYear).month(targetMonth).date(1);
       console.log('updateMonth - firstDate', firstDate.date(), firstDate.month(), firstDate.year());
       setBaseDate(firstDate);
     },

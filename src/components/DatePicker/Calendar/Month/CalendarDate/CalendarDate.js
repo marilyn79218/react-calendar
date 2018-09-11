@@ -28,26 +28,21 @@ const CalendarDate = ({
   isSameDay,
   isSelectedDate,
   setSelectedDate,
-}: Props) => {
-  console.log('month', month);
-  console.log('date month', date.month());
-
-  return (
-    <div
-      className={
-        classnames({
-          [styles['current-day']]: isSameDay(date, TODAY),
-          [styles['selected-day']]: isSelectedDate(date),
-          [styles.future]: date.month() > month,
-          [styles.past]: date.month() < month,
-        })
-      }
-      onClick={() => setSelectedDate(date)}
-    >
-      { date.date() }
-    </div>
-  );
-};
+}: Props) => (
+  <div
+    className={
+      classnames({
+        [styles['current-day']]: isSameDay(date, TODAY),
+        [styles['selected-day']]: isSelectedDate(date),
+        [styles.future]: date.month() > month,
+        [styles.past]: date.month() < month,
+      })
+    }
+    onClick={() => setSelectedDate(date)}
+  >
+    { date.date() }
+  </div>
+);
 
 const hoc = compose(
   withHandlers({
