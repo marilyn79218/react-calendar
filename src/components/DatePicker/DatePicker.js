@@ -2,7 +2,6 @@
 import * as React from 'react';
 import moment from 'moment';
 import type Moment from 'moment';
-
 import {
   compose,
   withState,

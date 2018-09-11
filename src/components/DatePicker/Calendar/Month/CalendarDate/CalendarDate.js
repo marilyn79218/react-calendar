@@ -16,7 +16,7 @@ import styles from './CalendarDate.m.css';
 const TODAY = moment();
 
 type Props = {
-  month: number,
+  baseMonth: number,
   date: Moment,
   isSameDay: (Moment, Moment) => boolean,
   isSelectedDate: Moment => boolean,
@@ -25,7 +25,7 @@ type Props = {
 };
 
 const CalendarDate = ({
-  month,
+  baseMonth,
   date,
   isSameDay,
   isSelectedDate,
@@ -37,8 +37,8 @@ const CalendarDate = ({
       classnames({
         [styles['current-day']]: isSameDay(date, TODAY),
         [styles['selected-day']]: isSelectedDate(date),
-        [styles.future]: date.month() > month,
-        [styles.past]: date.month() < month,
+        [styles.future]: date.month() > baseMonth,
+        [styles.past]: date.month() < baseMonth,
       })
     }
     onClick={() => {
@@ -53,7 +53,7 @@ const CalendarDate = ({
 const hoc = compose(
   withProps(
     ({ baseDate }) => ({
-      month: baseDate.month(),
+      baseMonth: baseDate.month(),
     }),
   ),
   withHandlers({
