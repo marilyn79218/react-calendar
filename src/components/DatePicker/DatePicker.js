@@ -90,7 +90,6 @@ const hoc = compose(
       } = props;
 
       const firstDate = moment().year(targetYear).month(targetMonth).date(1);
-      console.log('updateMonth - firstDate', firstDate.date(), firstDate.month(), firstDate.year());
       setBaseDate(firstDate);
     },
   }),

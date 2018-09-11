@@ -38,27 +38,22 @@ const Calendar = ({
   displayMode,
   getTextClickHandler,
   getComponent,
-}: Props) => {
-  console.log(' Calendar - month', month);
-  console.log(' Calendar - year', year);
-
-  return (
-    <section
-      className={styles.container}
-    >
-      <CalendarHeader
-        month={month}
-        year={year}
-        updateMonth={updateMonth}
-        textClickHandler={getTextClickHandler(displayMode)}
-        displayMode={displayMode}
-      />
-      {
-        getComponent(displayMode)
-      }
-    </section>
-  );
-};
+}: Props) => (
+  <section
+    className={styles.container}
+  >
+    <CalendarHeader
+      month={month}
+      year={year}
+      updateMonth={updateMonth}
+      textClickHandler={getTextClickHandler(displayMode)}
+      displayMode={displayMode}
+    />
+    {
+      getComponent(displayMode)
+    }
+  </section>
+);
 
 const hoc = compose(
   withState('displayMode', 'setDisplayMode', DISPLAY_MODES[0]),
@@ -106,6 +101,7 @@ const hoc = compose(
           return (
             <YearPanel
               year={year}
+              panelClickHandler={getPanelClickHandler(currentMode)}
             />
           );
         }

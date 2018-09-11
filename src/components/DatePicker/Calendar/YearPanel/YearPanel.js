@@ -10,11 +10,13 @@ import styles from './YearPanel.m.css';
 type Props = {
   allYears: Array<number>,
   availableYears: Array<number>,
+  panelClickHandler: (number, number) => any,
 };
 
 const YearPanel = ({
   allYears,
   availableYears,
+  panelClickHandler,
 }: Props) => (
   <section
     className={styles['year-container']}
@@ -28,6 +30,7 @@ const YearPanel = ({
               [styles['is-available']]: availableYears.indexOf(year) > -1,
             })
           }
+          onClick={panelClickHandler(year)}
         >
           { year }
         </div>
