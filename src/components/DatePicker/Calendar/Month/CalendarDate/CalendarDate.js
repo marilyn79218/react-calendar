@@ -20,7 +20,7 @@ type Props = {
   date: Moment,
   isSameDay: (Moment, Moment) => boolean,
   isSelectedDate: Moment => boolean,
-  setBaseDate: Moment => any,
+  updateBaseDate: Moment => any,
   setIsCalendarOpen: boolean => any,
 };
 
@@ -29,7 +29,7 @@ const CalendarDate = ({
   date,
   isSameDay,
   isSelectedDate,
-  setBaseDate,
+  updateBaseDate,
   setIsCalendarOpen,
 }: Props) => (
   <div
@@ -42,7 +42,7 @@ const CalendarDate = ({
       })
     }
     onClick={() => {
-      setBaseDate(date);
+      updateBaseDate(date);
       setIsCalendarOpen(false);
     }}
   >

@@ -8,14 +8,14 @@ import styles from './Month.m.css';
 type Props = {
   dates: Array<Moment>,
   baseDate: Moment,
-  setBaseDate: Moment => any,
+  updateBaseDate: Moment => any,
   setIsCalendarOpen: boolean => any,
 };
 
 const Month = ({
   dates,
   baseDate,
-  setBaseDate,
+  updateBaseDate,
   setIsCalendarOpen,
 }: Props) => (
   <section
@@ -33,7 +33,7 @@ const Month = ({
         <CalendarDate
           key={JSON.stringify(date)}
           baseDate={baseDate}
-          setBaseDate={setBaseDate}
+          updateBaseDate={updateBaseDate}
           date={date}
           setIsCalendarOpen={setIsCalendarOpen}
         />

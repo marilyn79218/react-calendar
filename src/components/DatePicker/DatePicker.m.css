@@ -1,0 +1,20 @@
+.date-picker-container {
+  display: flex;
+  align-content: center;
+  border: 1px solid black;
+  width: 120px;
+
+  > svg {
+    display: inline-block;
+  }
+}
+
+.date-picker-input {
+  display: inline-block;
+  border: 0;
+  width: 90px;
+
+  &:focus {
+    outline: none;
+  }
+}

@@ -99,6 +99,13 @@
     recompose "^0.29.0"
     warning "^4.0.1"
 
+"@material-ui/icons@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@material-ui/icons/-/icons-3.0.1.tgz#671fb3d04dcaf9351dbbd2bf82ae2ae72e3d93cd"
+  dependencies:
+    "@babel/runtime" "7.0.0"
+    recompose "^0.29.0"
+
 "@storybook/addon-actions@3.2.19":
   version "3.2.19"
   resolved "https://registry.yarnpkg.com/@storybook/addon-actions/-/addon-actions-3.2.19.tgz#c20515c16ec382e43807b47081b202459d609d4b"

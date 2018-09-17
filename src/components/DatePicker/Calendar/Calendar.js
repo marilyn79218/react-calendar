@@ -22,7 +22,7 @@ type Props = {
   year: number,
   dates: Array<Moment>,
   baseDate: Moment,
-  setBaseDate: Moment => any,
+  updateBaseDate: Moment => any,
   headerArrowHandler: string => any,
   displayMode: string,
   getTextClickHandler: string => any,
@@ -71,12 +71,12 @@ const hoc = compose(
     getPanelClickHandler: props => currentMode => (targetYear, targetMonth = 0) => {
       const {
         setDisplayMode,
-        updateBaseDate,
+        panelUpdateBaseDate,
       } = props;
 
       return () => {
         setDisplayMode(MODE_INTERACTIVE[currentMode].prevMode);
-        updateBaseDate(targetYear, targetMonth, 1);
+        panelUpdateBaseDate(targetYear, targetMonth, 1);
       };
     },
   }),
@@ -84,7 +84,7 @@ const hoc = compose(
     headerArrowHandler: props => currentMode => (direction = 'next') => {
       const {
         baseDate,
-        updateBaseDate,
+        panelUpdateBaseDate,
       } = props;
       const dateValue = baseDate.date();
       const baseMonth = baseDate.month();
@@ -93,24 +93,24 @@ const hoc = compose(
       switch (currentMode) {
         case DISPLAY_MODES[1]: {
           return () => {
-            updateBaseDate(baseYear, direction === 'next' ? baseMonth + 1 : baseMonth - 1);
+            panelUpdateBaseDate(baseYear, direction === 'next' ? baseMonth + 1 : baseMonth - 1);
           };
         }
         case DISPLAY_MODES[2]: {
           return () => {
-            updateBaseDate(direction === 'next' ? baseYear + 1 : baseYear - 1);
+            panelUpdateBaseDate(direction === 'next' ? baseYear + 1 : baseYear - 1);
           };
         }
         default: {
           return () => {
-            updateBaseDate(baseYear, baseMonth, direction === 'next' ? dateValue + 1 : dateValue - 1);
+            panelUpdateBaseDate(baseYear, baseMonth, direction === 'next' ? dateValue + 1 : dateValue - 1);
           };
         }
       }
     },
     getComponent: ({
       baseDate,
-      setBaseDate,
+      updateBaseDate,
       dates,
       getPanelClickHandler,
       setIsCalendarOpen,
@@ -136,7 +136,7 @@ const hoc = compose(
           return (
             <Month
               baseDate={baseDate}
-              setBaseDate={setBaseDate}
+              updateBaseDate={updateBaseDate}
               dates={dates}
               setIsCalendarOpen={setIsCalendarOpen}
             />

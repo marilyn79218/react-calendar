@@ -24,6 +24,12 @@ export const LOGIN_STATUS = {
 };
 
 export const DATE_FORMAT = 'YYYY-MM-DD';
+export const DATE_TYPE_LENGTH = {
+  year: 4,
+  month: 2,
+  dateValue: 2,
+};
+export const BASE_YEAR = 1970;
 export const ROW_COUNTS = 6;
 export const WEEK_LABELS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 export const WEEKDAYS_COUNTS = WEEK_LABELS.length;
