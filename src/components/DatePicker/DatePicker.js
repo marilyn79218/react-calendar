@@ -12,15 +12,12 @@ import CalendarSVGIcon from '@material-ui/icons/CalendarTodayTwoTone';
 import {
   DATE_TYPE_LENGTH,
   BASE_YEAR,
-  ROW_COUNTS,
-  WEEKDAYS_COUNTS,
 } from '../../shared/constants';
 import Calendar from './Calendar';
 import styles from './DatePicker.m.css';
 
 type Props = {
   baseDate: Moment,
-  dates: Array<Moment>,
   updateBaseDate: Moment => any,
   isCalendarOpen: boolean,
   setIsCalendarOpen: boolean => any,
@@ -52,65 +49,53 @@ const DatePicker = ({
     month: showMonth,
     dateValue: showDateValue,
   },
-}: Props) => {
-  const month = baseDate.month();
-  const year = baseDate.year();
-  const getAllDates = () => {
-    const firstDate = moment([year, month]).weekday(0);
-    const allDates = [...new Array(WEEKDAYS_COUNTS * ROW_COUNTS)].map((ele, index) => firstDate.clone().add(index, 'd'));
-
-    return allDates;
-  };
-
-  return (
-    <React.Fragment>
-      <section
-        className={styles['date-picker-container']}
-        onFocus={() => setIsCalendarOpen(!isCalendarOpen)}
-      >
-        <CalendarSVGIcon />
-        <input
-          className={styles['picker-input-year']}
-          type="text"
-          value={showYear}
-          onChange={dateChangeHandler('year')}
-          maxLength={DATE_TYPE_LENGTH.year}
+}: Props) => (
+  <React.Fragment>
+    <section
+      className={styles['date-picker-container']}
+      onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+    >
+      <CalendarSVGIcon />
+      <input
+        className={styles['picker-input-year']}
+        type="text"
+        value={showYear}
+        onChange={dateChangeHandler('year')}
+        maxLength={DATE_TYPE_LENGTH.year}
+      />
+      <span>
+        -
+      </span>
+      <input
+        className={styles['picker-input-month']}
+        type="text"
+        value={showMonth}
+        onChange={dateChangeHandler('month')}
+        maxLength={DATE_TYPE_LENGTH.month}
+      />
+      <span>
+        -
+      </span>
+      <input
+        className={styles['picker-input-date']}
+        type="text"
+        value={showDateValue}
+        onChange={dateChangeHandler('dateValue')}
+        maxLength={DATE_TYPE_LENGTH.dateValue}
+      />
+    </section>
+    {
+      isCalendarOpen ? (
+        <Calendar
+          date={baseDate}
+          onSelect={updateBaseDate}
+          setIsCalendarOpen={setIsCalendarOpen}
+          panelUpdateBaseDate={panelUpdateBaseDate}
         />
-        <span>
-          -
-        </span>
-        <input
-          className={styles['picker-input-month']}
-          type="text"
-          value={showMonth}
-          onChange={dateChangeHandler('month')}
-          maxLength={DATE_TYPE_LENGTH.month}
-        />
-        <span>
-          -
-        </span>
-        <input
-          className={styles['picker-input-date']}
-          type="text"
-          value={showDateValue}
-          onChange={dateChangeHandler('dateValue')}
-          maxLength={DATE_TYPE_LENGTH.dateValue}
-        />
-      </section>
-      {
-        isCalendarOpen ? (
-          <Calendar
-            baseDate={baseDate}
-            updateBaseDate={updateBaseDate}
-            dates={getAllDates()}
-            panelUpdateBaseDate={panelUpdateBaseDate}
-            setIsCalendarOpen={setIsCalendarOpen}
-          />
-        ) : null
-      }
-    </React.Fragment>
-  );
-};
+      ) : null
+    }
+  </React.Fragment>
+);
 
 const hoc = compose(
   withState('baseDate', 'setBaseDate', today),

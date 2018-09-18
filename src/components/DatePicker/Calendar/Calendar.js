@@ -1,15 +1,19 @@
 import * as React from 'react';
+import moment from 'moment';
 import type Moment from 'moment';
 
 import {
   compose,
   withState,
+  withProps,
   withHandlers,
 } from 'recompose';
 
 import {
   DISPLAY_MODES,
   MODE_INTERACTIVE,
+  ROW_COUNTS,
+  WEEKDAYS_COUNTS,
 } from '../../../shared/constants';
 import CalendarHeader from './CalendarHeader';
 import Month from './Month';
@@ -21,8 +25,8 @@ import styles from './Calendar.m.css';
 type Props = {
   year: number,
   dates: Array<Moment>,
-  baseDate: Moment,
-  updateBaseDate: Moment => any,
+  date: Moment,
+  onSelect: Moment => any,
   headerArrowHandler: string => any,
   displayMode: string,
   getTextClickHandler: string => any,
@@ -32,7 +36,7 @@ type Props = {
 };
 
 const Calendar = ({
-  baseDate,
+  date,
   displayMode,
   getTextClickHandler,
   headerArrowHandler,
@@ -42,7 +46,7 @@ const Calendar = ({
     className={styles.container}
   >
     <CalendarHeader
-      baseDate={baseDate}
+      baseDate={date}
       headerArrowHandler={headerArrowHandler(displayMode)}
       textClickHandler={getTextClickHandler(displayMode)}
       displayMode={displayMode}
@@ -80,15 +84,27 @@ const hoc = compose(
       };
     },
   }),
+  withProps(
+    ({ date }) => {
+      const month = date.month();
+      const year = date.year();
+      const firstDate = moment([year, month]).weekday(0);
+      const allDates = [...new Array(WEEKDAYS_COUNTS * ROW_COUNTS)].map((ele, index) => firstDate.clone().add(index, 'd'));
+
+      return {
+        dates: allDates,
+      };
+    },
+  ),
   withHandlers({
     headerArrowHandler: props => currentMode => (direction = 'next') => {
       const {
-        baseDate,
+        date,
         panelUpdateBaseDate,
       } = props;
-      const dateValue = baseDate.date();
-      const baseMonth = baseDate.month();
-      const baseYear = baseDate.year();
+      const dateValue = date.date();
+      const baseMonth = date.month();
+      const baseYear = date.year();
 
       switch (currentMode) {
         case DISPLAY_MODES[1]: {
@@ -109,8 +125,8 @@ const hoc = compose(
       }
     },
     getComponent: ({
-      baseDate,
-      updateBaseDate,
+      date,
+      onSelect,
       dates,
       getPanelClickHandler,
       setIsCalendarOpen,
@@ -119,7 +135,7 @@ const hoc = compose(
         case DISPLAY_MODES[1]: {
           return (
             <MonthPanel
-              baseDate={baseDate}
+              baseDate={date}
               panelClickHandler={getPanelClickHandler(currentMode)}
             />
           );
@@ -127,7 +143,7 @@ const hoc = compose(
         case DISPLAY_MODES[2]: {
           return (
             <YearPanel
-              baseDate={baseDate}
+              baseDate={date}
               panelClickHandler={getPanelClickHandler(currentMode)}
             />
           );
@@ -135,8 +151,8 @@ const hoc = compose(
         default: {
           return (
             <Month
-              baseDate={baseDate}
-              updateBaseDate={updateBaseDate}
+              baseDate={date}
+              updateBaseDate={onSelect}
               dates={dates}
               setIsCalendarOpen={setIsCalendarOpen}
             />
