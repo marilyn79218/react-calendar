@@ -1,40 +1,29 @@
-# Large App Starter Kit
+# DatePicker Storybook
 
-## Develop
+## Demo page
 ```sh
-VIS_API_HOST={} yarn start
+yarn storybook
 ```
 
-## commit checking
+## Developing Features
+1.  React.js
+2.  CSS module.
+3.  Lint checking before commits.
+4.  [Flow type][df1] checking.
+
+[df1]: <https://flow.org/>
+
+## Commit checking
 * flowtype
 * eslint for staged files
 
-## build checking
+## Build checking
 * flowtype
 * eslint
 
-## Fetch
-this project use `whatwg-fetch` as fetch polyfill
-
-### How
-```js
-import fetchUtil from 'shared/utils/fetchUtil';
-
-const endpoint = '/books';
-const fetchBooks = fetchUtil(endpoint);
-
-fetchBooks.get()
-  .then(console.log); // GET /books response
-
-fetchBooks.post({
-  body: {
-    ids: [1, 2, 3],
-  },
-  headers: {
-    user: 1,
-  },
-  token,
-})
-  .then(console.log);
-
-```
+# Calendar Component API
+| Name  | Type | Default | Description |
+| :---: | :--: | :-----: | :---------: |
+| date | Moment | moment() | The selected date |
+| onSelect | function(date) | | Called when a date is selected |
+| setIsCalendarOpen | function(boolean) |  | Toggle Calendar open or close |
