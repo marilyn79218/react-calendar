@@ -9,8 +9,6 @@ import {
 
 import i18nInstance from './i18next';
 
-import AppRoute from '../AppRoute';
-
 import history from './history';
 import store from './store';
 
@@ -19,7 +17,9 @@ const Root = () => (
     <ConnectedRouter history={history}>
       <I18nextProvider i18n={i18nInstance}>
         <Router history={history}>
-          <AppRoute />
+          <div>
+            App To be Continued
+          </div>
         </Router>
       </I18nextProvider>
     </ConnectedRouter>
