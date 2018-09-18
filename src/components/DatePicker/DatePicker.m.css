@@ -1,20 +1,30 @@
 .date-picker-container {
   display: flex;
-  align-content: center;
-  border: 1px solid black;
-  width: 120px;
+  align-items: center;
+  max-width: 120px;
+  border: 0;
 
   > svg {
     display: inline-block;
   }
-}
 
-.date-picker-input {
-  display: inline-block;
-  border: 0;
-  width: 90px;
+  > span {
+    font-size: 10px;
+    display: inline-block;
+  }
 
-  &:focus {
-    outline: none;
+  > input {
+    display: inline-block;
+    max-width: 20px;
+    border: 0;
+    text-align: center;
+
+    &:nth-child(2) {
+      max-width: 35px;
+    }
+
+    &:focus {
+      outline: none;
+    }
   }
 }

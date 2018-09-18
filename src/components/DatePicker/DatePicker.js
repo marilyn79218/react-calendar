@@ -64,35 +64,39 @@ const DatePicker = ({
 
   return (
     <React.Fragment>
-      <form
+      <section
         className={styles['date-picker-container']}
+        onFocus={() => setIsCalendarOpen(!isCalendarOpen)}
       >
         <CalendarSVGIcon />
         <input
           className={styles['picker-input-year']}
           type="text"
           value={showYear}
-          onClick={() => setIsCalendarOpen(!isCalendarOpen)}
           onChange={dateChangeHandler('year')}
           maxLength={DATE_TYPE_LENGTH.year}
         />
+        <span>
+          -
+        </span>
         <input
           className={styles['picker-input-month']}
           type="text"
           value={showMonth}
-          onClick={() => setIsCalendarOpen(!isCalendarOpen)}
           onChange={dateChangeHandler('month')}
           maxLength={DATE_TYPE_LENGTH.month}
         />
+        <span>
+          -
+        </span>
         <input
           className={styles['picker-input-date']}
           type="text"
           value={showDateValue}
-          onClick={() => setIsCalendarOpen(!isCalendarOpen)}
           onChange={dateChangeHandler('dateValue')}
           maxLength={DATE_TYPE_LENGTH.dateValue}
         />
-      </form>
+      </section>
       {
         isCalendarOpen ? (
           <Calendar
